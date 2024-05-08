@@ -1,0 +1,29 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <h2>Risk Assessment</h2>
+    <form method="post" id="riskForm">
+        {% csrf_token %}
+        <textarea name="risk_factors" placeholder="Enter risk factors here..."></textarea>
+        <button type="submit">Assess Risk</button>
+    </form>
+    <div id="assessmentResult"></div>
+</div>
+
+<script>
+    document.getElementById('riskForm').onsubmit = function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        fetch("{% url 'risk_assessment' %}", {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+        .then(data => {
+            document.getElementById('assessmentResult').textContent = data.assessment;
+        }).catch(error => console.error('Error:', error));
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<!-- Container for the chart -->
+<div class="chart-container" style="position: relative; height:40vh; width:80vw;">
+    <canvas id="covidTrendsChart"></canvas>
+</div>
+
+<!-- Include Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Script to create the chart using Chart.js -->
+<script>
+    // Example data, replace with the context variable passed from Django view
+    const covidVariantData = [
+        {"variant": "XBB.1.16.6", "published_date": "2023-09-15T12:00:00 AM", "share_hi": 0.0101498857140},
+        // Add other variant data...
+    ];
+
+    // Parse data for charting
+    const chartData = {
+        labels: covidVariantData.map(data => data.published_date),
+        datasets: []
+    };
+
+    // Group by variant
+    const variantData = {};
+    covidVariantData.forEach(data => {
+        if (!(data.variant in variantData)) {
+            variantData[data.variant] = [];
+        }
+        variantData[data.variant].push(data.share_hi);
+    });
+
+    // Create datasets for each variant
+    Object.keys(variantData).forEach((variant, index) => {
+        chartData.datasets.push({
+            label: variant,
+            data: variantData[variant],
+            fill: false,
+            borderColor: `hsl(${index * 60}, 100%, 50%)`, // Assign a unique color to each dataset
+            tension: 0.1
+        });
+    });
+
+    // Instantiate the chart
+    const ctx = document.getElementById('covidTrendsChart').getContext('2d');
+    const covidTrendsChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Share of Variant'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Published Date'
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+{% endblock %}

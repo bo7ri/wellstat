@@ -1,0 +1,85 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <aside class="sidebar">
+        <div class="logo-container">
+            <img src="{% static 'Icons/logo.png' %}" alt="WellStat" class="sidebar-logo">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard_overview' %}" class="nav-item active">
+                <img src="{% static 'icons/home.png' %}" alt="" class="nav-icon">
+                Overview
+            </a>
+            <a href="{% url 'ai_bot' %}" class="nav-item">
+                <img src="{% static 'icons/robot.png' %}" alt="" class="nav-icon">
+                AI Chatbot
+            </a>
+            <a href="{% url 'risk_assessment' %}" class="nav-item">
+                <img src="{% static 'icons/risk.png' %}" alt="" class="nav-icon">
+                Risk Assessment
+            </a>
+            <a href="{% url 'registration' %}" class="nav-item">
+                <img src="{% static 'icons/reg.png' %}" alt="" class="nav-icon">
+                Registration
+            </a>
+            <a href="{% url 'settings' %}" class="nav-item">
+                <img src="{% static 'icons/settings.png' %}" alt="" class="nav-icon">
+                Settings
+            </a>
+            <a href="{% url 'logout' %}" class="nav-item">
+                <img src="{% static 'icons/logout.png' %}" alt="" class="nav-icon">
+                Log Out
+            </a>
+        </nav>
+    </aside>
+
+        <div class="chart-container" style="width:500px; height:600px; float:right;">
+            <canvas id="covidTrendsChart"></canvas>
+        </div>
+
+</div>
+
+
+<!-- Include Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Initialize the chart with made-up data -->
+<script>
+    const ctx = document.getElementById('covidTrendsChart').getContext('2d');
+    const covidTrendsChart = new Chart(ctx, {
+        type: 'bar', // Type of chart: 'bar' for bar chart
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May'], // X-axis labels
+            datasets: [{
+                label: 'COVID-19 Cases', // Dataset label
+                data: [120, 150, 180, 200, 170], // Data points for the Y-axis
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true // Start the y-axis from 0
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

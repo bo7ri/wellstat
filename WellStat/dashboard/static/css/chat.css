@@ -1,0 +1,65 @@
+/* chat.css */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 240px;
+    overflow-y: auto;
+    background: #fff;
+    border-right: 1px solid #ddd;
+    z-index: 1000; /* Ensure the sidebar is above other content */
+}
+
+.dashboard-container {
+    margin-left: 240px; /* Should match the sidebar width */
+}
+
+#chat-container {
+    margin: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+#chat-box {
+    height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.chat-input-container {
+    display: flex;
+}
+
+#chat-input {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#send-message {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* Styles for chat messages */
+.user-message, .bot-message {
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+    display: block; /* Or inline-block, as per your design */
+}
+
+.user-message {
+    background-color: #e7f5ff;
+    text-align: right;
+}
+
+.bot-message {
+    background-color: #f1f0f0;
+    text-align: left;
+}

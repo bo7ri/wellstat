@@ -1,0 +1,50 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <aside class="sidebar">
+        <div class="logo-container">
+            <img src="{% static 'Icons/logo.png' %}" alt="WellStat" class="sidebar-logo">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard_overview' %}" class="nav-item active">
+                <img src="{% static 'icons/home.png' %}" alt="" class="nav-icon">
+                Overview
+            </a>
+            <a href="{% url 'ai_bot' %}" class="nav-item">
+                <img src="{% static 'icons/robot.png' %}" alt="" class="nav-icon">
+                AI Chatbot
+            </a>
+            <a href="{% url 'risk_assessment' %}" class="nav-item">
+                <img src="{% static 'icons/risk.png' %}" alt="" class="nav-icon">
+                Risk Assessment
+            </a>
+            <a href="{% url 'registration' %}" class="nav-item">
+                <img src="{% static 'icons/reg.png' %}" alt="" class="nav-icon">
+                Registration
+            </a>
+            <a href="{% url 'settings' %}" class="nav-item">
+                <img src="{% static 'icons/settings.png' %}" alt="" class="nav-icon">
+                Settings
+            </a>
+            <a href="{% url 'logout' %}" class="nav-item">
+                <img src="{% static 'icons/logout.png' %}" alt="" class="nav-icon">
+                Log Out
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Registration Container -->
+</div>
+
+{{ form }}
+<form method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- This should render the form fields -->
+    <button type="submit">Register Patient</button>
+</form>
+
+{% endblock %}
